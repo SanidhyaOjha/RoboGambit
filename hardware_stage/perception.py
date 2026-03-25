@@ -19,14 +19,14 @@ DIST_COEFFS = np.zeros((1, 5), dtype=np.float32)
 
 # ── Board geometry ────────────────────────────────────────────────────────────
 CORNER_WORLD = {
-    21: (350,  350),
-    22: (350, -350),
-    23: (-350, -350),
-    24: (-350,  350),
+    21: (212.5,  212.5),
+    22: (212.5, -212.5),
+    23: (-212.5, -212.5),
+    24: (-212.5,  212.5),
 }
-SQUARE_SIZE = 100
-TOP_LEFT_X  = 300
-TOP_LEFT_Y  = 300
+SQUARE_SIZE = 60
+TOP_LEFT_X  = 180
+TOP_LEFT_Y  = 180
 BOARD_SIZE  = 6
 PIECE_IDS   = set(range(1, 11))
 
