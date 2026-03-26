@@ -6,8 +6,14 @@ import serial
 import time
 from perception import board
 
-ser = serial.Serial('COM3', 115200) 
+
 BOARD = np.zeros((6, 6), dtype=int)
+# Serial port for the arm
+ser = serial.Serial("COM4", baudrate=115200, dsrdtr=None)
+ser.setRTS(False)
+ser.setDTR(False)
+# Serial port for the Solenoid
+ser2 = serial.Serial('COM3', 115200) 
 
 def get_board_state() -> np.ndarray:
     """Use the perception module to get the current board state."""
@@ -24,32 +30,17 @@ def movetocmd(move:str) -> str:
 
 def pick():
     """Send the command to pick up a piece."""
-    ser.write(b'1')
+    ser2.write(b'1')
 
 def place():
     """Send the command to place a piece."""
-    ser.write(b'0')
+    ser2.write(b'0')
 
 def send_cmd(command: str):
     """Send the move string to the robot's actuators."""
+     # add code to send move_str to the robot
     print(f"Sending command: {command}")
-    parser = argparse.ArgumentParser(description='Http JSON Communication')
-    
-
-    args = parser.parse_args()
-
-    ip_addr = "192.168.4.1"
-
-    try:
-        while True:
-            
-            url = "http://" + ip_addr + "/js?json=" + command
-            response = requests.get(url)
-            content = response.text
-            print(content)
-    except KeyboardInterrupt:
-        pass
-    # add code to send move_str to the robot
+    ser.write(command.encode() + b'\n')
 
 if __name__ == "__main__":
     # write code to run the main loop of the program, calling move() and send_cmd() as needed
